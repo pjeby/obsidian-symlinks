@@ -14,14 +14,11 @@ async function reconcileFolderCreation(realPath, normalizedPath) {
 async function listRecursiveChild(path, dirent) {
     const
         vaultPath = path ? `${path}/${dirent.name}` : dirent.name,
-        realPath = this.getFullRealPath(vaultPath)
+        realPath = this.getFullRealPath(vaultPath),
+        stat = await this.fs.promises.stat(realPath)
     ;
-    if (dirent.isSymbolicLink() || (await this.fs.promises.lstat(realPath)).isSymbolicLink()) {
-        const stat = await this.fs.promises.stat(realPath);  // Get the plain stat
-        stat.name = dirent.name;  // Make it look like a dirent
-        dirent = stat;
-    }
-    return await this.constructor.prototype.listRecursiveChild.call(this, path, dirent);
+    stat.name = dirent.name;  // Make the stat look like a dirent
+    return await this.constructor.prototype.listRecursiveChild.call(this, path, stat);
 }
 
 module.exports = class Symlinks extends Plugin {
