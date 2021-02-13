@@ -1,0 +1,8 @@
+{
+  "id": "obsidian-symlinks",
+  "name": "Symlink Support",
+  "version": "0.0.1",
+  "description": "Basic symlink support for Obsidian",
+  "minAppVersion": "0.10.13",
+  "isDesktopOnly": true
+}
