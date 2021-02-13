@@ -24,6 +24,8 @@ tl;dr: don't use this plugin unless you're *really* sure you know what you're do
 
 * Symlinking to a target that is *inside* the same vault is likely to give you duplicate search results, among other issues.  So you probably don't want to do that.
 
+* This plugin doesn't check for symlink loops (direct or indirect).  So if you link to a folder containing a link to a folder, etc., you run the risk of Obsidian trying to load infinite subdirectories, using up all your memory, crashing Obsidian, and maybe your computer along with it.  So *don't do that*.
+
 * Symlinking things under the `.obsidian/` directory in order to share them between vaults is **a good way to corrupt your setttings**, unless you *really really* know what you're doing.
 
   Obsidian and its plugins tend to write JSON files without first checking to see if they've changed on disk, nor do they reload their settings even if they have changed.  So if you share a settings file between two vaults, it's likely that changes made in one will overwrite changes by the other, unless you close the vault you're not making changes in.
