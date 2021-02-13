@@ -4,6 +4,17 @@ const
     shouldRecurse = (platform === "darwin" || platform === "win32")
 ;
 
+async function list(path) {
+    const result = { folders: [], files: [] };
+    for (const fname of await this.fs.promises.readdir(this.getFullPath(path))) {
+        const fpath = normalizePath(path ? `${path}/${fname}` : fname);
+        const stat = await this.fs.promises.stat(this.getFullRealPath(fpath));
+        if (stat.isFile())      result.files.push(fpath);
+        if (stat.isDirectory()) result.folders.push(fpath);
+    }
+    return result;
+}
+
 async function reconcileFolderCreation(realPath, normalizedPath) {
     if ( (await this.fs.promises.lstat(this.getFullRealPath(realPath))).isSymbolicLink() ) {
         this.startWatchPath(realPath, shouldRecurse);
@@ -29,8 +40,8 @@ module.exports = class Symlinks extends Plugin {
 
         // Hotfix .reconcileFolderCreation and .listRecursiveChild -- note: list() is similarly broken!
         const adapter = this.app.vault.adapter;
-        Object.assign(adapter, {listRecursiveChild, reconcileFolderCreation});
-        this.register(() => { delete adapter.listRecursiveChild; delete adapter.reconcileFolderCreation; });
+        Object.assign(adapter, {list, listRecursiveChild, reconcileFolderCreation});
+        this.register(() => { delete adapter.list; delete adapter.listRecursiveChild; delete adapter.reconcileFolderCreation; });
 
         // Force the adapter to rescan all dirs, looking for symlinks
         adapter.listRecursive("");
