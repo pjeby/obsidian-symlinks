@@ -1,5 +1,13 @@
 # Basic Symlink Support for Obsidian
 
+> ## This plugin is obsolete!
+> 
+> Obsidian 0.11.1 has added experimental symlink support, using an approach inspired by this plugin.  If you've installed this plugin already, please deactivate it before upgrading to Obsidian 0.11.1, as it will likely conflict and cause Bad Things to happen.
+> 
+> Note that Obsidian's official support for symlinks has almost exactly the same limitations as this plugin, because they're mostly the natural result of using symlinks for this purpose.  So be sure you understand those limitations and the possible consequences of using symlinks incorrectly, *before* you try using them with Obsidian, either via this plugin or the built-in support.
+> 
+> (Last, but not least, please be aware that both this plugin and Obsidian 0.11.1 have been observed to have problems with symlinks on OS X, so you may wish to wait until 0.11.2, or at least be prepared for the need to roll back to 0.11.0 if the issue affects you.)
+
 This plugin allows [Obsidian.md](https://Obsidian.md/) to follow directory symlinks inside a vault, and notice when changes are made to files in those directories, outside of Obsidian.
 
 In principle, it should work on all desktop platforms, but has only been tested on Windows.  Feedback on its functioning on other platforms is appreciated.
